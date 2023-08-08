@@ -20,8 +20,8 @@ var (
 
 func main() { // 建立MongoDB連接
 	credential := options.Credential{
-		Username: "admin",
-		Password: "123456",
+		Username: "",
+		Password: "",
 	}
 
 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017").SetAuth(credential))
