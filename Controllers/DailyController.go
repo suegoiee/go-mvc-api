@@ -1,9 +1,8 @@
 package Controllers
 
 import (
+	"fmt"
 	"ginPrac/Services"
-	"ginPrac/Views"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,14 +18,15 @@ func NewDailyController(dailyService *Services.DailyService) *DailyController {
 }
 
 func (dc *DailyController) PriceToday(context *gin.Context) {
-	code := context.Param("code")
-	daily, err := dc.dailyService.GetDailyByCode(code)
+	fmt.Println("price")
+	// code := context.Param("code")
+	// daily, err := dc.dailyService.GetDailyByCode(code)
 
-	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
+	// if err != nil {
+	// 	context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	// 	return
+	// }
 
-	v := Views.RenderDaily(daily)
-	context.JSON(http.StatusOK, v)
+	// v := Views.RenderDaily(daily)
+	// context.JSON(http.StatusOK, v)
 }

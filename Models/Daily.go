@@ -1,8 +1,8 @@
 package Models
 
 type Daily struct {
-	Name string `json:"name" bson:"name"`
-	Code string `json:"code" bson:"code"`
+	Title string `json:"title" bson:"title"`
+	Time  string `json:"time" bson:"time"`
 	// OpeningPrice float32 `json:"oPrice" bson:"oPrice"`
 	// TradeInfo    []Info  `json:"info" bson:"info"`
 }

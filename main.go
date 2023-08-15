@@ -20,8 +20,8 @@ var (
 
 func main() { // 建立MongoDB連接
 	credential := options.Credential{
-		Username: "",
-		Password: "",
+		Username: "admin",
+		Password: "123456",
 	}
 
 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017").SetAuth(credential))
@@ -36,14 +36,19 @@ func main() { // 建立MongoDB連接
 
 	// 指定要使用的數據庫和集合
 	db := client.Database("stock")
-	collection := db.Collection("news")
 
+	collection := db.Collection("news")
 	dailyRepository := Repositories.NewDailyRepository(collection)
 	dailyService := Services.NewDailyService(dailyRepository)
 	dailyController := Controllers.NewDailyController(dailyService)
 
+	newsRepository := Repositories.NewNewsRepository(collection)
+	newsService := Services.NewNewsService(newsRepository)
+	newsController := Controllers.NewNewsController(newsService)
+
 	route := gin.Default()
 
 	route.GET("/today/:code", dailyController.PriceToday)
+	route.GET("/news", newsController.GetNews)
 	route.Run()
 }
