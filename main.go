@@ -6,8 +6,10 @@ import (
 	"ginPrac/Repositories"
 	"ginPrac/Services"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -18,13 +20,32 @@ var (
 	err         error
 )
 
+type MongoConfig struct {
+	Username string
+	Password string
+	Host     string
+	Port     string
+}
+
 func main() { // 建立MongoDB連接
-	credential := options.Credential{
-		Username: "admin",
-		Password: "123456",
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Failed loading env file", err)
 	}
 
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017").SetAuth(credential))
+	mongoConfig := MongoConfig{
+		Username: os.Getenv("USERNAME"),
+		Password: os.Getenv("PASSWORD"),
+		Host:     os.Getenv("HOST"),
+		Port:     os.Getenv("PORT"),
+	}
+
+	credential := options.Credential{
+		Username: mongoConfig.Username,
+		Password: mongoConfig.Password,
+	}
+
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://" + mongoConfig.Host + ":" + mongoConfig.Port).SetAuth(credential))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -38,9 +59,6 @@ func main() { // 建立MongoDB連接
 	db := client.Database("stock")
 
 	collection := db.Collection("news")
-	dailyRepository := Repositories.NewDailyRepository(collection)
-	dailyService := Services.NewDailyService(dailyRepository)
-	dailyController := Controllers.NewDailyController(dailyService)
 
 	newsRepository := Repositories.NewNewsRepository(collection)
 	newsService := Services.NewNewsService(newsRepository)
@@ -48,7 +66,6 @@ func main() { // 建立MongoDB連接
 
 	route := gin.Default()
 
-	route.GET("/today/:code", dailyController.PriceToday)
 	route.GET("/news", newsController.GetNews)
 	route.Run()
 }
