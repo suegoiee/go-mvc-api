@@ -67,5 +67,5 @@ func main() { // 建立MongoDB連接
 	route := gin.Default()
 
 	route.GET("/news", newsController.GetNews)
-	route.Run()
+	route.Run(":8001")
 }
