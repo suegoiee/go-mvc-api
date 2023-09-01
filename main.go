@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"ginPrac/Controllers"
 	"ginPrac/Repositories"
 	"ginPrac/Services"
@@ -29,7 +28,6 @@ type MongoConfig struct {
 }
 
 func main() { // 建立MongoDB連接
-	fmt.Println("Let's go!!")
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Failed loading env file", err)
