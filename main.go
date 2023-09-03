@@ -29,7 +29,7 @@ type MongoConfig struct {
 }
 
 func main() { // 建立MongoDB連接
-	fmt.Println("Let's go!!")
+	fmt.Println("2023/09/03")
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Failed loading env file", err)
