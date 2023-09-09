@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"ginPrac/Controllers"
 	"ginPrac/Repositories"
 	"ginPrac/Services"
@@ -29,15 +28,14 @@ type MongoConfig struct {
 }
 
 func main() { // 建立MongoDB連接
-	fmt.Println("2023/09/03")
-	err := godotenv.Load()
+	err := godotenv.Load("./.env")
 	if err != nil {
 		log.Fatal("Failed loading env file", err)
 	}
 
 	mongoConfig := MongoConfig{
-		Username: os.Getenv("USERNAME"),
-		Password: os.Getenv("PASSWORD"),
+		Username: os.Getenv("MONGOUSER"),
+		Password: os.Getenv("MONGOPASS"),
 		Host:     os.Getenv("HOST"),
 		Port:     os.Getenv("PORT"),
 	}
@@ -69,5 +67,5 @@ func main() { // 建立MongoDB連接
 	route := gin.Default()
 
 	route.GET("/news", newsController.GetNews)
-	route.Run(":8001")
+	route.Run(":8002")
 }
