@@ -15,7 +15,7 @@ COPY . .
 RUN go build -o main .
 
 # Expose port 8080 (or the port your Gin application is listening on)
-EXPOSE 8001
+EXPOSE 8002
 
 # Command to run the executable
 CMD ["./main"]

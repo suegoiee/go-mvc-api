@@ -14,12 +14,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var (
-	ctx         context.Context
-	mongoclient *mongo.Client
-	err         error
-)
-
 type MongoConfig struct {
 	Username string
 	Password string
